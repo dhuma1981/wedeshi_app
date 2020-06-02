@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:wedeshi/models/category_model.dart';
+import 'package:wedeshi/models/subcategory_model.dart';
 
 import 'package:wedeshi/utils/constants.dart';
 import 'package:wedeshi/utils/keys.dart';
@@ -25,6 +26,28 @@ class ApiProvider {
       if (temp["status"]) {
         for (int i = 0; i < temp["data"].length; i++) {
           categories.add(Category.fromJson(temp["data"][i]));
+        }
+      }
+      return categories;
+    } else {
+      throw Exception('Failed to fetch conversations');
+    }
+  }
+
+  static Future getSubCategories(int subcategoryId) async {
+    var map = new Map<String, dynamic>();
+    map["secret"] = Keys.TOKEN;
+    map["category_id"] = subcategoryId.toString();
+    final response = await getClient()
+        .post("${Constants.BASE_REST_URL}/sub_all_categories", body: map);
+
+    List<SubCategory> categories = [];
+    if (response.statusCode == 200) {
+      var temp = json.decode(response.body);
+
+      if (temp["status"]) {
+        for (int i = 0; i < temp["data"].length; i++) {
+          categories.add(SubCategory.fromJson(temp["data"][i]));
         }
       }
       return categories;
