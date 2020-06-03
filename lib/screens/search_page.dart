@@ -55,7 +55,11 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           isloading
-              ? Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CircularProgressIndicator(),
+                ))
               : Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(8.0),

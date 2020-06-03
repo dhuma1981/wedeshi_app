@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Product {
   int productId;
   int brandId;
@@ -12,21 +14,24 @@ class Product {
   String productImagePath;
   int isVisible;
   String cDate;
+  String imagePath;
 
-  Product(
-      {this.productId,
-      this.brandId,
-      this.catId,
-      this.subCatId,
-      this.sscId,
-      this.brandName,
-      this.categoryName,
-      this.subCategoryName,
-      this.productName,
-      this.productDescription,
-      this.productImagePath,
-      this.isVisible,
-      this.cDate});
+  Product({
+    this.productId,
+    this.brandId,
+    this.catId,
+    this.subCatId,
+    this.sscId,
+    this.brandName,
+    this.categoryName,
+    this.subCategoryName,
+    this.productName,
+    this.productDescription,
+    this.productImagePath,
+    this.isVisible,
+    this.cDate,
+    this.imagePath,
+  });
 
   Product.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
@@ -42,6 +47,7 @@ class Product {
     productImagePath = json['product_image_path'];
     isVisible = json['is_visible'];
     cDate = json['c_date'];
+    imagePath = json['image_path'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +65,7 @@ class Product {
     data['product_image_path'] = this.productImagePath;
     data['is_visible'] = this.isVisible;
     data['c_date'] = this.cDate;
+    data['image_path'] = this.imagePath;
     return data;
   }
 }

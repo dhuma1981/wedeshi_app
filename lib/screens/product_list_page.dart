@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
@@ -30,15 +31,15 @@ class _ProductListPageState extends State<ProductListPage> {
       isLoading = true;
     });
     List<Product> data = await ApiProvider.getProductList(
-        subcategoryId: widget.selectedSubCategoryId.toString(),
+        subcategoryId: widget.selectedSubCategoryId ?? "",
         subsubCategoryId: widget.selectedSubSubCategoryId.toString());
     desiProductList = data
-        .where((e) =>
-            e.brandId == 5 && e.subCatId == widget.selectedSubSubCategoryId)
+        .where(
+            (e) => e.brandId == 5 && e.sscId == widget.selectedSubSubCategoryId)
         .toList();
     weDeshiProductList = data
-        .where((e) =>
-            e.brandId == 6 && e.subCatId == widget.selectedSubSubCategoryId)
+        .where(
+            (e) => e.brandId == 6 && e.sscId == widget.selectedSubSubCategoryId)
         .toList();
     setState(() {
       isLoading = false;
@@ -60,7 +61,12 @@ class _ProductListPageState extends State<ProductListPage> {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (_) => SearchPage()));
                 }),
-            IconButton(icon: Icon(Icons.share), onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  Share.share(
+                      "विदेशी नहीं वी-देशी  (स्वदेशी अपनाओ)\n\nबहोत हो गया बहार की चीजोको खरीदके, दूसरे देशको मुनाफा देना। अब सही समय है की हम सब एक होकर देश के प्रोडक्टस यानी की लोकल चीजों को खरीदे देश के प्रोडक्टस को अधिक महत्व देने का आग्रह रखे। इस एप के जरिए आप आसानीसे जान सकते है की कौन सा \"स्वदेशी\" प्रोडक्ट है और कौन सा \"विदेशी\" प्रोडक्ट। इतना ही नहीं, ये एप आपको कोई भी \"विदेशी\" प्रोडक्ट की जगह कौन सी \"स्वदेशी\" प्रोडक्ट खरीदनी चाहिए वो जानकारी भी देगा। कृपया इस ऐप को डाउनलोड करें।\n\nये एप्लीकेशन सभी देश वासियो तक पाहोचाए !\n\nhttps://play.google.com/store/apps/details?id=in.bi.wedeshi");
+                }),
             IconButton(icon: Icon(Icons.notifications_none), onPressed: () {})
           ],
           bottom: TabBar(tabs: [
@@ -97,8 +103,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       SizedBox(
                         width: 120,
                         height: 120,
-                        child: CachedNetworkImage(
-                            imageUrl: product.productImagePath),
+                        child: CachedNetworkImage(imageUrl: product.imagePath),
                       ),
                       SizedBox(
                         height: 5,
@@ -134,8 +139,7 @@ class _ProductListPageState extends State<ProductListPage> {
                       SizedBox(
                         width: 120,
                         height: 120,
-                        child: CachedNetworkImage(
-                            imageUrl: product.productImagePath),
+                        child: CachedNetworkImage(imageUrl: product.imagePath),
                       ),
                       SizedBox(
                         height: 5,
