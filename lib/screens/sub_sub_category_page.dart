@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/models/subcategory_model.dart';
-import 'package:wedeshi/screens/sub_sub_category_page.dart';
+import 'package:wedeshi/models/subsubcategory_model.dart';
+import 'package:wedeshi/screens/product_list_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 
-class SubCategoryPage extends StatelessWidget {
-  final int selectedCategoryId;
+class SubSubCategoryPage extends StatelessWidget {
+  final int selectedSubCategoryId;
 
-  SubCategoryPage({this.selectedCategoryId});
+  SubSubCategoryPage({this.selectedSubCategoryId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +23,22 @@ class SubCategoryPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
-            future: ApiProvider.getSubCategories(selectedCategoryId),
+            future: ApiProvider.getSubSubCategories(selectedSubCategoryId),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<SubCategory> data = snapshot.data
-                    .where((item) => item.categoryId == selectedCategoryId)
-                    .toList();
+                List<SubSubCategory> data = snapshot.data.toList();
                 return GridView.builder(
                     itemCount: data.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
                     itemBuilder: (_, index) {
-                      SubCategory subCategory = data[index];
+                      SubSubCategory subsubCategory = data[index];
                       return InkWell(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => SubSubCategoryPage(
+                              builder: (_) => ProductListPage(
                                     selectedSubCategoryId:
-                                        subCategory.subCategoryId,
+                                        subsubCategory.subCategoryId,
                                   )));
                         },
                         child: Card(
@@ -53,14 +52,14 @@ class SubCategoryPage extends StatelessWidget {
                                   width: 120,
                                   height: 120,
                                   child: CachedNetworkImage(
-                                      imageUrl: subCategory.imagePath),
+                                      imageUrl: subsubCategory.imagePath),
                                 ),
                                 SizedBox(
                                   height: 5,
                                 ),
                                 Expanded(
                                     child: Text(
-                                  subCategory.description,
+                                  subsubCategory.description,
                                   textAlign: TextAlign.center,
                                 )),
                               ],

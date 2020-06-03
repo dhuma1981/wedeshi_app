@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wedeshi/screens/brands_page.dart';
+import 'package:wedeshi/screens/category_page.dart';
 import 'package:wedeshi/screens/more_page.dart';
 import 'package:wedeshi/screens/submit_brand_page.dart';
-import 'package:wedeshi/screens/wedeshi_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget _getPage(int selectedIndex) {
     switch (selectedIndex) {
       case 0:
-        return WeDeshiPage();
+        return CategoryPage();
       case 1:
         return BrandsPage();
       case 2:
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       case 3:
         return MorePage();
     }
-    return WeDeshiPage();
+    return CategoryPage();
   }
 
   @override

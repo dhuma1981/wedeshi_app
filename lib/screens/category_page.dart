@@ -1,10 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/models/category_model.dart';
 import 'package:wedeshi/screens/sub_category_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 import 'package:wedeshi/utils/constants.dart';
 
-class WeDeshiPage extends StatelessWidget {
+class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,11 +41,11 @@ class WeDeshiPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.network(
-                                      category.imagePath,
-                                      height: 120,
+                                    SizedBox(
                                       width: 120,
-                                      fit: BoxFit.contain,
+                                      height: 120,
+                                      child: CachedNetworkImage(
+                                          imageUrl: category.imagePath),
                                     ),
                                     SizedBox(
                                       height: 5,
