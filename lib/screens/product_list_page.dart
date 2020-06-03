@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/utils/api_provider.dart';
@@ -39,11 +40,11 @@ class ProductListPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.network(
-                                product.imagePath,
-                                height: 120,
+                              SizedBox(
                                 width: 120,
-                                fit: BoxFit.contain,
+                                height: 120,
+                                child: CachedNetworkImage(
+                                    imageUrl: product.imagePath),
                               ),
                               SizedBox(
                                 height: 5,
