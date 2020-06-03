@@ -15,7 +15,7 @@ class ApiProvider {
     ]);
   }
 
-  static Future getCategories() async {
+  static getCategories() async {
     var map = new Map<String, dynamic>();
     map["secret"] = Keys.TOKEN;
     final response = await getClient()
@@ -36,7 +36,7 @@ class ApiProvider {
     }
   }
 
-  static Future getSubCategories(int categoryId) async {
+  static getSubCategories(int categoryId) async {
     var map = new Map<String, dynamic>();
     map["secret"] = Keys.TOKEN;
     map["category_id"] = categoryId.toString();
@@ -58,7 +58,7 @@ class ApiProvider {
     }
   }
 
-  static Future getSubSubCategories(int subCategoryId) async {
+  static getSubSubCategories(int subCategoryId) async {
     var map = new Map<String, dynamic>();
     map["secret"] = Keys.TOKEN;
     map["sub_category_id"] = subCategoryId.toString();
@@ -80,12 +80,36 @@ class ApiProvider {
     }
   }
 
-  static Future getProductList(int subcategoryId) async {
+  static Future getProductList(
+      {String subcategoryId, String subsubCategoryId}) async {
     var map = new Map<String, dynamic>();
     map["secret"] = Keys.TOKEN;
-    map["sub_category_id"] = subcategoryId.toString();
+    map["sub_category_id"] = subcategoryId ?? "";
+    map["next_cat_id"] = subsubCategoryId ?? "";
     final response = await getClient()
         .post("${Constants.BASE_REST_URL}/products", body: map);
+
+    List<Product> products = [];
+    if (response.statusCode == 200) {
+      var temp = json.decode(response.body);
+
+      if (temp["status"]) {
+        for (int i = 0; i < temp["data"].length; i++) {
+          products.add(Product.fromJson(temp["data"][i]));
+        }
+      }
+      return products;
+    } else {
+      throw Exception('Failed to fetch conversations');
+    }
+  }
+
+  static Future<List<Product>> searchProducts(String query) async {
+    var map = new Map<String, dynamic>();
+    map["secret"] = Keys.TOKEN;
+    map["query"] = query;
+    final response =
+        await getClient().post("${Constants.BASE_REST_URL}/search", body: map);
 
     List<Product> products = [];
     if (response.statusCode == 200) {

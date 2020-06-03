@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wedeshi/common/custom_appbar.dart';
 import 'package:wedeshi/screens/brands_page.dart';
 import 'package:wedeshi/screens/category_page.dart';
 import 'package:wedeshi/screens/more_page.dart';
+import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/screens/submit_brand_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,13 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("We Deshi"),
-        actions: [
-          IconButton(icon: Icon(Icons.notifications_none), onPressed: () {})
-        ],
-      ),
+      appBar: Widgets.getCustomAppBar(context),
       body: _getPage(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

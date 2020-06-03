@@ -3,11 +3,13 @@ class Product {
   int brandId;
   int catId;
   int subCatId;
-  String subCategoryName;
   int sscId;
+  String brandName;
+  String categoryName;
+  String subCategoryName;
   String productName;
   String productDescription;
-  String imagePath;
+  String productImagePath;
   int isVisible;
   String cDate;
 
@@ -16,11 +18,13 @@ class Product {
       this.brandId,
       this.catId,
       this.subCatId,
-      this.subCategoryName,
       this.sscId,
+      this.brandName,
+      this.categoryName,
+      this.subCategoryName,
       this.productName,
       this.productDescription,
-      this.imagePath,
+      this.productImagePath,
       this.isVisible,
       this.cDate});
 
@@ -29,11 +33,13 @@ class Product {
     brandId = json['brand_id'];
     catId = json['cat_id'];
     subCatId = json['sub_cat_id'];
-    subCategoryName = json['sub_category_name'];
     sscId = json['ssc_id'];
+    brandName = json['brand_name'];
+    categoryName = json['category_name'];
+    subCategoryName = json['sub_category_name'];
     productName = json['product_name'];
     productDescription = json['product_description'];
-    imagePath = json['image_path'];
+    productImagePath = json['product_image_path'];
     isVisible = json['is_visible'];
     cDate = json['c_date'];
   }
@@ -44,11 +50,13 @@ class Product {
     data['brand_id'] = this.brandId;
     data['cat_id'] = this.catId;
     data['sub_cat_id'] = this.subCatId;
-    data['sub_category_name'] = this.subCategoryName;
     data['ssc_id'] = this.sscId;
+    data['brand_name'] = this.brandName;
+    data['category_name'] = this.categoryName;
+    data['sub_category_name'] = this.subCategoryName;
     data['product_name'] = this.productName;
     data['product_description'] = this.productDescription;
-    data['image_path'] = this.imagePath;
+    data['product_image_path'] = this.productImagePath;
     data['is_visible'] = this.isVisible;
     data['c_date'] = this.cDate;
     return data;

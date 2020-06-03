@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:wedeshi/models/subcategory_model.dart';
+import 'package:wedeshi/common/custom_appbar.dart';
 import 'package:wedeshi/models/subsubcategory_model.dart';
 import 'package:wedeshi/screens/product_list_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
@@ -13,13 +13,7 @@ class SubSubCategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("We Deshi"),
-        actions: [
-          IconButton(icon: Icon(Icons.notifications_none), onPressed: () {})
-        ],
-      ),
+      appBar: Widgets.getCustomAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder(
@@ -37,8 +31,8 @@ class SubSubCategoryPage extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => ProductListPage(
-                                    selectedSubCategoryId:
-                                        subsubCategory.subCategoryId,
+                                    selectedSubSubCategoryId:
+                                        subsubCategory.subSubId,
                                   )));
                         },
                         child: Card(
