@@ -58,7 +58,8 @@ class ApiProvider {
     }
   }
 
-  static getSubSubCategories(int subCategoryId) async {
+  static Future<List<SubSubCategory>> getSubSubCategories(
+      int subCategoryId) async {
     var map = new Map<String, dynamic>();
     map["secret"] = Keys.TOKEN;
     map["sub_category_id"] = subCategoryId.toString();
@@ -80,12 +81,14 @@ class ApiProvider {
     }
   }
 
-  static Future getProductList(
-      {String subcategoryId, String subsubCategoryId}) async {
+  static Future<List<Product>> getProductList(
+      {int subcategoryId, int subsubCategoryId}) async {
     var map = new Map<String, dynamic>();
     map["secret"] = Keys.TOKEN;
-    map["sub_category_id"] = subcategoryId ?? "";
-    map["next_cat_id"] = subsubCategoryId ?? "";
+    if (subcategoryId != null)
+      map["sub_category_id"] = subcategoryId.toString();
+    if (subsubCategoryId != null)
+      map["next_cat_id"] = subsubCategoryId.toString();
     final response = await getClient()
         .post("${Constants.BASE_REST_URL}/products", body: map);
 

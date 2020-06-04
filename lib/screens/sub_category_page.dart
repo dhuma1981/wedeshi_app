@@ -48,7 +48,12 @@ class SubCategoryPage extends StatelessWidget {
                                   width: 120,
                                   height: 120,
                                   child: CachedNetworkImage(
-                                      imageUrl: subCategory.imagePath),
+                                      imageUrl: subCategory.imagePath,
+                                      errorWidget: (context, url, error) =>
+                                          Icon(
+                                            Icons.not_interested,
+                                            size: 80,
+                                          )),
                                 ),
                                 SizedBox(
                                   height: 5,

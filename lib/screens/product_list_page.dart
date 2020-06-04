@@ -18,12 +18,14 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   bool isLoading = false;
+  bool fromSubSub = false;
 
   List<Product> desiProductList = [], weDeshiProductList = [];
 
   @override
   void initState() {
     super.initState();
+    if (widget.selectedSubSubCategoryId != null) fromSubSub = true;
     fetchProducts();
   }
 
@@ -32,15 +34,21 @@ class _ProductListPageState extends State<ProductListPage> {
       isLoading = true;
     });
     List<Product> data = await ApiProvider.getProductList(
-        subcategoryId: widget.selectedSubCategoryId.toString() ?? "",
-        subsubCategoryId: widget.selectedSubSubCategoryId.toString());
+        subcategoryId: widget.selectedSubCategoryId,
+        subsubCategoryId: widget.selectedSubSubCategoryId);
     desiProductList = data
-        .where(
-            (e) => e.brandId == 5 && e.sscId == widget.selectedSubSubCategoryId)
+        .where((e) =>
+            e.brandId == 5 &&
+            (fromSubSub
+                ? e.sscId == widget.selectedSubSubCategoryId
+                : e.subCatId == widget.selectedSubCategoryId))
         .toList();
     weDeshiProductList = data
-        .where(
-            (e) => e.brandId == 6 && e.sscId == widget.selectedSubSubCategoryId)
+        .where((e) =>
+            e.brandId == 6 &&
+            (fromSubSub
+                ? e.sscId == widget.selectedSubSubCategoryId
+                : e.subCatId == widget.selectedSubCategoryId))
         .toList();
     setState(() {
       isLoading = false;
@@ -104,7 +112,12 @@ class _ProductListPageState extends State<ProductListPage> {
                       SizedBox(
                         width: 120,
                         height: 120,
-                        child: CachedNetworkImage(imageUrl: product.imagePath),
+                        child: CachedNetworkImage(
+                            imageUrl: product.imagePath,
+                            errorWidget: (context, url, error) => Icon(
+                                  Icons.not_interested,
+                                  size: 80,
+                                )),
                       ),
                       SizedBox(
                         height: 5,
@@ -140,7 +153,13 @@ class _ProductListPageState extends State<ProductListPage> {
                       SizedBox(
                         width: 120,
                         height: 120,
-                        child: CachedNetworkImage(imageUrl: product.imagePath),
+                        child: CachedNetworkImage(
+                          imageUrl: product.imagePath,
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.not_interested,
+                            size: 80,
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 5,
