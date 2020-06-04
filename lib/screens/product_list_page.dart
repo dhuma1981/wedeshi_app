@@ -4,6 +4,7 @@ import 'package:share/share.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
+import 'package:wedeshi/utils/constants.dart';
 
 class ProductListPage extends StatefulWidget {
   final int selectedSubCategoryId;
@@ -31,7 +32,7 @@ class _ProductListPageState extends State<ProductListPage> {
       isLoading = true;
     });
     List<Product> data = await ApiProvider.getProductList(
-        subcategoryId: widget.selectedSubCategoryId ?? "",
+        subcategoryId: widget.selectedSubCategoryId.toString() ?? "",
         subsubCategoryId: widget.selectedSubSubCategoryId.toString());
     desiProductList = data
         .where(
@@ -71,9 +72,9 @@ class _ProductListPageState extends State<ProductListPage> {
           ],
           bottom: TabBar(tabs: [
             Tab(
-              text: "Deshi",
+              text: Constants.SWADESHI,
             ),
-            Tab(text: "WeDeshi"),
+            Tab(text: Constants.WEDESHI),
           ]),
         ),
         body: isLoading
