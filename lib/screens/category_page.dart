@@ -12,7 +12,10 @@ class CategoryPage extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          Text(Constants.CATEGORIES),
+          Text(
+            Constants.CATEGORIES,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
           SizedBox(
             height: 10,
           ),

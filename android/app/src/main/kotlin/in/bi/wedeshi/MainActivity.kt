@@ -1,4 +1,4 @@
-package in.bi.wedeshi
+package `in`.bi.wedeshi
 
 import io.flutter.embedding.android.FlutterActivity
 
