@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/utils/api_provider.dart';
+import 'package:wedeshi/utils/debouncer.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class _SearchPageState extends State<SearchPage> {
   bool isloading = false;
   TextEditingController searchController = TextEditingController();
   List<Product> products = [];
+
+  final _debouncer = Debouncer(milliseconds: 500);
 
   void fetchProducts(String query) async {
     setState(() {
@@ -47,7 +50,9 @@ class _SearchPageState extends State<SearchPage> {
                 Expanded(
                   child: TextField(
                     controller: searchController,
-                    onChanged: (text) => fetchProducts(text),
+                    onChanged: (text) {
+                      _debouncer.run(() => fetchProducts(text));
+                    },
                     decoration: InputDecoration(hintText: "I am looking for"),
                   ),
                 ),
