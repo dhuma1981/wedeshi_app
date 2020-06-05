@@ -128,6 +128,28 @@ class ApiProvider {
       throw Exception('Failed to fetch conversations');
     }
   }
+
+  static Future<Product> getProduct({int productId}) async {
+    var map = new Map<String, dynamic>();
+    map["secret"] = Keys.TOKEN;
+    map["product_id"] = productId.toString();
+    final response = await getClient()
+        .post("${Constants.BASE_REST_URL}/get_product", body: map);
+
+    List<Product> products = [];
+    if (response.statusCode == 200) {
+      var temp = json.decode(response.body);
+
+      if (temp["status"]) {
+        for (int i = 0; i < temp["data"].length; i++) {
+          products.add(Product.fromJson(temp["data"][i]));
+        }
+      }
+      return products[0];
+    } else {
+      throw Exception('Failed to fetch conversations');
+    }
+  }
 }
 
 class HeaderInterceptor implements InterceptorContract {

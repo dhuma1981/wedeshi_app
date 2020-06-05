@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:wedeshi/models/product_model.dart';
+import 'package:wedeshi/screens/product_detail_page.dart';
 import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 import 'package:wedeshi/utils/constants.dart';
@@ -94,85 +95,111 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 
   Widget getDeshiProductList() {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-            itemCount: desiProductList.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (_, index) {
-              Product product = desiProductList[index];
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: CachedNetworkImage(
-                            imageUrl: product.imagePath,
-                            errorWidget: (context, url, error) => Icon(
-                                  Icons.not_interested,
-                                  size: 80,
-                                )),
+    return desiProductList.length > 0
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.builder(
+                itemCount: desiProductList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (_, index) {
+                  Product product = desiProductList[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => ProductDetailPage(
+                                productId: product.productId,
+                                localProducts: desiProductList,
+                              )));
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: CachedNetworkImage(
+                                  imageUrl: product.imagePath,
+                                  errorWidget: (context, url, error) => Icon(
+                                        Icons.not_interested,
+                                        size: 80,
+                                      )),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Expanded(
+                                child: Text(
+                              product.productName,
+                              textAlign: TextAlign.center,
+                            )),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Expanded(
-                          child: Text(
-                        product.productName,
-                        textAlign: TextAlign.center,
-                      )),
-                    ],
-                  ),
-                ),
-              );
-            }));
+                    ),
+                  );
+                }))
+        : Center(
+            child: Text("No ${Constants.SWADESHI} products found!"),
+          );
   }
 
   Widget getWeDeshiProductList() {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-            itemCount: weDeshiProductList.length,
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemBuilder: (_, index) {
-              Product product = weDeshiProductList[index];
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: CachedNetworkImage(
-                          imageUrl: product.imagePath,
-                          errorWidget: (context, url, error) => Icon(
-                            Icons.not_interested,
-                            size: 80,
-                          ),
+    return weDeshiProductList.length > 0
+        ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.builder(
+                itemCount: weDeshiProductList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemBuilder: (_, index) {
+                  Product product = weDeshiProductList[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => ProductDetailPage(
+                                productId: product.productId,
+                                localProducts: desiProductList,
+                              )));
+                    },
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 120,
+                              height: 120,
+                              child: CachedNetworkImage(
+                                imageUrl: product.imagePath,
+                                errorWidget: (context, url, error) => Icon(
+                                  Icons.not_interested,
+                                  size: 80,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Expanded(
+                                child: Text(
+                              product.productName,
+                              textAlign: TextAlign.center,
+                            )),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Expanded(
-                          child: Text(
-                        product.productName,
-                        textAlign: TextAlign.center,
-                      )),
-                    ],
-                  ),
-                ),
-              );
-            }));
+                    ),
+                  );
+                }))
+        : Center(
+            child: Text("No  ${Constants.WEDESHI} products found!"),
+          );
   }
 }

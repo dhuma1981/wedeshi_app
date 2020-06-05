@@ -15,6 +15,7 @@ class Product {
   int isVisible;
   String cDate;
   String imagePath;
+  String productOrigin;
 
   Product({
     this.productId,
@@ -31,6 +32,7 @@ class Product {
     this.isVisible,
     this.cDate,
     this.imagePath,
+    this.productOrigin,
   });
 
   Product.fromJson(Map<String, dynamic> json) {
@@ -48,6 +50,7 @@ class Product {
     isVisible = json['is_visible'];
     cDate = json['c_date'];
     imagePath = json['image_path'];
+    productOrigin = json['product_origin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +69,7 @@ class Product {
     data['is_visible'] = this.isVisible;
     data['c_date'] = this.cDate;
     data['image_path'] = this.imagePath;
+    data['product_origin'] = this.productOrigin;
     return data;
   }
 }
