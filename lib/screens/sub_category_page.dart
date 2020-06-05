@@ -60,7 +60,7 @@ class SubCategoryPage extends StatelessWidget {
                                 ),
                                 Expanded(
                                     child: Text(
-                                  subCategory.description,
+                                  subCategory.subCategoryName,
                                   textAlign: TextAlign.center,
                                 )),
                               ],

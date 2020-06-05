@@ -86,7 +86,7 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
                               ),
                               Expanded(
                                   child: Text(
-                                subsubCategory.description,
+                                subsubCategory.name,
                                 textAlign: TextAlign.center,
                               )),
                             ],
