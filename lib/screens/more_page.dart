@@ -4,6 +4,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:wedeshi/screens/about_us_page.dart';
+import 'package:wedeshi/screens/defination_local_page.dart';
 import 'package:wedeshi/screens/disclaimer_page.dart';
 import 'package:wedeshi/utils/constants.dart';
 
@@ -17,6 +18,7 @@ class MorePage extends StatefulWidget {
 class _MorePageState extends State<MorePage> {
   String aboutUs = "";
   String disclaimer = "";
+  String definationLocal = "";
 
   @override
   void initState() {
@@ -30,12 +32,24 @@ class _MorePageState extends State<MorePage> {
     await remoteConfig.activateFetched();
     aboutUs = jsonDecode(remoteConfig.getString("about_us"))["data"];
     disclaimer = jsonDecode(remoteConfig.getString("disclaimer"))["data"];
+    definationLocal = jsonDecode(remoteConfig.getString("local"))['data'];
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        ListTile(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => DefinationLocalPage(
+                      definationLocalText: definationLocal,
+                    )));
+          },
+          leading: Icon(Icons.done_all),
+          title: Text(Constants.DEFINATION_LOCAL),
+        ),
+        Divider(),
         ListTile(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
