@@ -1,6 +1,7 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/home_page.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 RemoteConfig remoteConfig;
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: HomePage(),
+      home: ShowCaseWidget(builder: Builder(builder: (_) => HomePage())),
     );
   }
 }
