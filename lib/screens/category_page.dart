@@ -14,7 +14,7 @@ class CategoryPage extends StatelessWidget {
         children: [
           Text(
             Constants.CATEGORIES,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(fontSize: 20),
           ),
           SizedBox(
             height: 10,

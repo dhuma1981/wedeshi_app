@@ -12,4 +12,8 @@ class Constants {
   static const DISCLAIMER = "Disclaimer";
   static const FEEDBACK = "Feedback";
   static const RATE_US = "Rate Us";
+
+  static const RELATED_LOCAL_PRODUCTS = "Related local products";
+
+  static const NO_PRODUCT_FOUND = "No related स्वदेशी products found!";
 }

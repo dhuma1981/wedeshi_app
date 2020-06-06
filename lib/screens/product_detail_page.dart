@@ -51,11 +51,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Container(
                           width: width,
                           child: Center(
-                            child: Image.network(
-                              product.imagePath,
-                              height: height * 0.30,
+                              child: CachedNetworkImage(
+                            height: height * 0.30,
+                            imageUrl: product.imagePath,
+                            errorWidget: (context, url, error) => Icon(
+                              Icons.not_interested,
+                              size: 80,
                             ),
-                          ),
+                          )),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -95,7 +98,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        "Related local products",
+                        Constants.RELATED_LOCAL_PRODUCTS,
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
@@ -144,7 +147,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     ),
                                   )))
                       : Center(
-                          child: Text("No local products found!"),
+                          child: Text(Constants.NO_PRODUCT_FOUND),
                         )
                 ],
               );
