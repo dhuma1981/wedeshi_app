@@ -7,4 +7,9 @@ class Constants {
 
   static const SWADESHI = "स्वदेशी";
   static const WEDESHI = "विदेशी";
+
+  static const ABOUT_US = "About Us";
+  static const DISCLAIMER = "Disclaimer";
+  static const FEEDBACK = "Feedback";
+  static const RATE_US = "Rate Us";
 }

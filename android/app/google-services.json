@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "507315956939",
+    "firebase_url": "https://wedeshi-f956f.firebaseio.com",
+    "project_id": "wedeshi-f956f",
+    "storage_bucket": "wedeshi-f956f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507315956939:android:12df794cbcaff713457f4e",
+        "android_client_info": {
+          "package_name": "in.bi.wedeshi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "507315956939-nt6v66genpps5t6vpb9s2rjgdcmq59je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU-f_PpFTK70ngXr_6dlYx8Rbh00xmRW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "507315956939-nt6v66genpps5t6vpb9s2rjgdcmq59je.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

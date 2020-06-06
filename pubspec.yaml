@@ -26,6 +26,9 @@ dependencies:
   http_interceptor: ^0.2.0
   cached_network_image: ^2.2.0+1
   share: ^0.6.4+3
+  launch_review: ^2.0.0
+  firebase_core: ^0.4.5
+  firebase_remote_config: ^0.3.1
 
 
   # The following adds the Cupertino Icons font to your application.
