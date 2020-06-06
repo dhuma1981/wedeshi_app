@@ -10,6 +10,8 @@ import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/screens/submit_brand_page.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:wedeshi/utils/constants.dart';
+import 'package:rate_my_app/rate_my_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,18 +22,35 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex;
   GlobalKey _one = GlobalKey();
 
+  RateMyApp _rateMyApp = RateMyApp(
+      preferencesPrefix: "rma_wedeshi_",
+      minDays: 0,
+      minLaunches: 3,
+      remindDays: 1,
+      remindLaunches: 5);
+
   @override
   void initState() {
     super.initState();
     _selectedIndex = 0;
     showShowcaseView();
+    _rateMyApp.init().then((_) {
+      if (_rateMyApp.shouldOpenDialog) {
+        _rateMyApp.showRateDialog(context);
+      }
+    });
   }
 
-  void showShowcaseView() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => ShowCaseWidget.of(context).startShowCase([
-              _one,
-            ]));
+  Future<void> showShowcaseView() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool("opened") == null) {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([
+                _one,
+              ]));
+      prefs.setBool("opened", true);
+    }
   }
 
   Widget _getPage(int selectedIndex) {
