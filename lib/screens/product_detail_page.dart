@@ -110,39 +110,54 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 3),
-                              itemBuilder: (_, index) => Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            width: 60,
-                                            height: 60,
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  relatedLocalProducts[index]
-                                                      .imagePath,
-                                              errorWidget:
-                                                  (context, url, error) => Icon(
-                                                Icons.not_interested,
-                                                size: 80,
+                              itemBuilder: (_, index) => InkWell(
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (_) => ProductDetailPage(
+                                                    productId:
+                                                        relatedLocalProducts[
+                                                                index]
+                                                            .productId,
+                                                    localProducts:
+                                                        widget.localProducts,
+                                                  )));
+                                    },
+                                    child: Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 60,
+                                              height: 60,
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    relatedLocalProducts[index]
+                                                        .imagePath,
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Icon(
+                                                  Icons.not_interested,
+                                                  size: 80,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Expanded(
-                                              child: Text(
-                                            relatedLocalProducts[index]
-                                                .productName,
-                                            textAlign: TextAlign.center,
-                                          )),
-                                        ],
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                              relatedLocalProducts[index]
+                                                  .productName,
+                                              textAlign: TextAlign.center,
+                                            )),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   )))
