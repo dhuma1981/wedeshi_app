@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:wedeshi/common/custom_appbar.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/utils/api_provider.dart';
@@ -17,6 +18,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   List<Product> relatedLocalProducts;
+  Product product;
 
   @override
   void initState() {
@@ -36,13 +38,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: Widgets.getCustomAppBar(context, onShare: () {
-        print("SHARE PRODUCT");
+        if (product != null)
+          Share.share(product.productName + Constants.PRODUCT_SHARE);
       }),
       body: FutureBuilder(
           future: ApiProvider.getProduct(productId: widget.productId),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              Product product = snapshot.data;
+              product = snapshot.data;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -1,14 +1,12 @@
 import 'dart:convert';
 
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:wedeshi/screens/about_us_page.dart';
 import 'package:wedeshi/screens/defination_local_page.dart';
 import 'package:wedeshi/screens/disclaimer_page.dart';
 import 'package:wedeshi/utils/constants.dart';
-
-RemoteConfig remoteConfig;
+import 'package:wedeshi/main.dart';
 
 class MorePage extends StatefulWidget {
   @override
@@ -27,9 +25,6 @@ class _MorePageState extends State<MorePage> {
   }
 
   Future<void> fetchRemoteConfig() async {
-    remoteConfig = await RemoteConfig.instance;
-    await remoteConfig.fetch();
-    await remoteConfig.activateFetched();
     aboutUs = jsonDecode(remoteConfig.getString("about_us"))["data"];
     disclaimer = jsonDecode(remoteConfig.getString("disclaimer"))["data"];
     definationLocal = jsonDecode(remoteConfig.getString("local"))['data'];

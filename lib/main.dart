@@ -1,7 +1,14 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/home_page.dart';
 
-void main() {
+RemoteConfig remoteConfig;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  remoteConfig = await RemoteConfig.instance;
+  await remoteConfig.fetch(expiration: Duration(seconds: 0));
+  await remoteConfig.activateFetched();
   runApp(
     MyApp(),
   );
