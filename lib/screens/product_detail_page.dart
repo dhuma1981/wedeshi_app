@@ -9,8 +9,15 @@ import 'package:wedeshi/utils/constants.dart';
 class ProductDetailPage extends StatefulWidget {
   final int productId;
   final List<Product> localProducts;
+  final int subCategoryId;
+  final int subSubCategoryId;
 
-  ProductDetailPage({this.productId, this.localProducts});
+  ProductDetailPage({
+    this.productId,
+    this.localProducts,
+    this.subCategoryId,
+    this.subSubCategoryId,
+  });
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -19,6 +26,7 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
   List<Product> relatedLocalProducts;
   Product product;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -28,8 +36,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       relatedLocalProducts
           .removeWhere((prod) => prod.productId == widget.productId);
     } else {
-      relatedLocalProducts = [];
+      fetchProducts();
     }
+  }
+
+  void fetchProducts() async {
+    setState(() {
+      isLoading = true;
+    });
+    List<Product> data = await ApiProvider.getProductList(
+        subcategoryId: widget.subCategoryId ?? "",
+        subsubCategoryId: widget.subSubCategoryId ?? "");
+    relatedLocalProducts = data.where((e) => e.brandId == 5).toList();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -115,67 +136,73 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                     ),
                   ),
-                  relatedLocalProducts.length > 0
-                      ? Expanded(
-                          child: GridView.builder(
-                              itemCount: relatedLocalProducts.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
-                              itemBuilder: (_, index) => InkWell(
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (_) => ProductDetailPage(
-                                                    productId:
+                  isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : relatedLocalProducts.length > 0
+                          ? Expanded(
+                              child: GridView.builder(
+                                  itemCount: relatedLocalProducts.length,
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3),
+                                  itemBuilder: (_, index) => InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      ProductDetailPage(
+                                                        productId:
+                                                            relatedLocalProducts[
+                                                                    index]
+                                                                .productId,
+                                                        localProducts: widget
+                                                            .localProducts,
+                                                      )));
+                                        },
+                                        child: Card(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 60,
+                                                  height: 60,
+                                                  child: CachedNetworkImage(
+                                                    imageUrl:
                                                         relatedLocalProducts[
                                                                 index]
-                                                            .productId,
-                                                    localProducts:
-                                                        widget.localProducts,
-                                                  )));
-                                    },
-                                    child: Card(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SizedBox(
-                                              width: 60,
-                                              height: 60,
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    relatedLocalProducts[index]
-                                                        .imagePath,
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Icon(
-                                                  Icons.not_interested,
-                                                  size: 80,
+                                                            .imagePath,
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            Icon(
+                                                      Icons.not_interested,
+                                                      size: 80,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Expanded(
+                                                    child: Text(
+                                                  relatedLocalProducts[index]
+                                                      .productName,
+                                                  textAlign: TextAlign.center,
+                                                )),
+                                              ],
                                             ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                              relatedLocalProducts[index]
-                                                  .productName,
-                                              textAlign: TextAlign.center,
-                                            )),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  )))
-                      : Center(
-                          child: Text(Constants.NO_PRODUCT_FOUND),
-                        )
+                                      )))
+                          : Center(
+                              child: Text(Constants.NO_PRODUCT_FOUND),
+                            )
                 ],
               );
             } else {

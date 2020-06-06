@@ -84,6 +84,8 @@ class _SearchPageState extends State<SearchPage> {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (_) => ProductDetailPage(
                                           productId: product.productId,
+                                          subCategoryId: product.subCatId,
+                                          subSubCategoryId: product.sscId,
                                         )));
                               },
                               child: Card(
