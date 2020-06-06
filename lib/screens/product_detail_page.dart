@@ -19,10 +19,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   List<Product> relatedLocalProducts;
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.localProducts != null) {
+      relatedLocalProducts = widget.localProducts.toList();
+      relatedLocalProducts
+          .removeWhere((prod) => prod.productId == widget.productId);
+    } else {
+      relatedLocalProducts = [];
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    relatedLocalProducts = widget.localProducts.toList();
-    relatedLocalProducts
-        .removeWhere((prod) => prod.productId == widget.productId);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(

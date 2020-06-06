@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               title: Text("WeDeshi"), icon: Icon(Icons.home)),
           BottomNavigationBarItem(
-              title: Text("Brands"), icon: Icon(Icons.branding_watermark)),
+              title: Text("Brands"), icon: Icon(Icons.shopping_basket)),
           BottomNavigationBarItem(
               title: Text("Submit Brand"), icon: Icon(Icons.add_box)),
           BottomNavigationBarItem(

@@ -7,7 +7,10 @@ class Widgets {
       {Function onShare}) {
     return AppBar(
       centerTitle: false,
-      title: Text("We Deshi"),
+      title: Image.network(
+        "https://wedeshi.in/uploads/app/logo.png",
+        width: 80,
+      ),
       actions: [
         IconButton(
             icon: Icon(Icons.share),

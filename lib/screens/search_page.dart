@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wedeshi/models/product_model.dart';
+import 'package:wedeshi/screens/product_detail_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 import 'package:wedeshi/utils/debouncer.dart';
 
@@ -31,7 +32,10 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Text("We Deshi"),
+        title: Image.network(
+          "https://wedeshi.in/uploads/app/logo.png",
+          width: 80,
+        ),
       ),
       body: Column(
         children: [
@@ -75,28 +79,37 @@ class _SearchPageState extends State<SearchPage> {
                                   crossAxisCount: 2),
                           itemBuilder: (_, index) {
                             Product product = products[index];
-                            return Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 120,
-                                      height: 120,
-                                      child: CachedNetworkImage(
-                                          imageUrl: product.productImagePath),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Expanded(
-                                        child: Text(
-                                      product.productName,
-                                      textAlign: TextAlign.center,
-                                    )),
-                                  ],
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (_) => ProductDetailPage(
+                                          productId: product.productId,
+                                        )));
+                              },
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 120,
+                                        height: 120,
+                                        child: CachedNetworkImage(
+                                            imageUrl: product.productImagePath),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        product.productName,
+                                        textAlign: TextAlign.center,
+                                      )),
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
