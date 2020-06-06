@@ -82,12 +82,14 @@ class _ProductListPageState extends State<ProductListPage> {
                 }),
             //IconButton(icon: Icon(Icons.notifications_none), onPressed: () {})
           ],
-          bottom: TabBar(tabs: [
-            Tab(
-              text: Constants.SWADESHI,
-            ),
-            Tab(text: Constants.WEDESHI),
-          ]),
+          bottom: TabBar(
+              labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              tabs: [
+                Tab(
+                  text: Constants.SWADESHI,
+                ),
+                Tab(text: Constants.WEDESHI),
+              ]),
         ),
         body: isLoading
             ? Center(child: CircularProgressIndicator())

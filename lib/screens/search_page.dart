@@ -70,52 +70,61 @@ class _SearchPageState extends State<SearchPage> {
                   child: CircularProgressIndicator(),
                 ))
               : Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GridView.builder(
-                          itemCount: products.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemBuilder: (_, index) {
-                            Product product = products[index];
-                            return InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => ProductDetailPage(
-                                          productId: product.productId,
-                                          subCategoryId: product.subCatId,
-                                          subSubCategoryId: product.sscId,
-                                        )));
-                              },
-                              child: Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 120,
-                                        height: 120,
-                                        child: CachedNetworkImage(
-                                            imageUrl: product.productImagePath),
+                  child: products.length > 0
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GridView.builder(
+                              itemCount: products.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2),
+                              itemBuilder: (_, index) {
+                                Product product = products[index];
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (_) => ProductDetailPage(
+                                                  productId: product.productId,
+                                                  subCategoryId:
+                                                      product.subCatId,
+                                                  subSubCategoryId:
+                                                      product.sscId,
+                                                )));
+                                  },
+                                  child: Card(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 120,
+                                            height: 120,
+                                            child: CachedNetworkImage(
+                                                imageUrl:
+                                                    product.productImagePath),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Expanded(
+                                              child: Text(
+                                            product.productName,
+                                            textAlign: TextAlign.center,
+                                          )),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        product.productName,
-                                        textAlign: TextAlign.center,
-                                      )),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            );
-                          })))
+                                );
+                              }))
+                      : Center(
+                          child: Text("No product found!"),
+                        ))
         ],
       ),
     );

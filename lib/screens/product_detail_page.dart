@@ -60,7 +60,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Scaffold(
       appBar: Widgets.getCustomAppBar(context, onShare: () {
         if (product != null)
-          Share.share(product.productName + Constants.PRODUCT_SHARE);
+          Share.share(Constants.getProductShareMessage(product));
       }),
       body: FutureBuilder(
           future: ApiProvider.getProduct(productId: widget.productId),
@@ -96,7 +96,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Chip(
-                            backgroundColor: Colors.red,
+                            backgroundColor: product.brandId == 5
+                                ? Colors.green
+                                : Colors.red,
                             label: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Text(
