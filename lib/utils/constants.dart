@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:wedeshi/models/product_model.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 class Constants {
   static const BASE_REST_URL = "https://wedeshi.in/api/";
@@ -26,5 +29,72 @@ class Constants {
   static String getProductShareMessage(Product product) {
     return "${product.productName} - जिसे हम यूज़ करते है वो ${product.brandId == 5 ? SWADESHI : WEDESHI} है" +
         PRODUCT_SHARE;
+  }
+
+  static showRatingDialog({BuildContext context, RateMyApp rateMyApp}) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: Image.asset(
+        "assets/ic_launcher.png",
+        width: 100,
+        height: 100,
+      ),
+      content: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+          LaunchReview.launch();
+        },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "How is your exprience with us?",
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Colors.grey,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.grey,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.grey,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.grey,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            FlatButton(
+                onPressed: () {
+                  rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed);
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "MAYBE LATER",
+                  style: TextStyle(color: Colors.grey),
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }

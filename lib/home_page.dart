@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: "rma_wedeshi_",
       minDays: 0,
-      minLaunches: 3,
+      minLaunches: 2,
       remindDays: 1,
       remindLaunches: 5);
 
@@ -36,7 +36,11 @@ class _HomePageState extends State<HomePage> {
     showShowcaseView();
     _rateMyApp.init().then((_) {
       if (_rateMyApp.shouldOpenDialog) {
-        _rateMyApp.showStarRateDialog(context);
+        showDialog(
+          context: context,
+          builder: (context) => Constants.showRatingDialog(
+              context: context, rateMyApp: _rateMyApp),
+        );
       }
     });
   }
