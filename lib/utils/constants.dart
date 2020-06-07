@@ -7,6 +7,9 @@ class Constants {
   static const BASE_REST_URL = "https://wedeshi.in/api/";
 
   static const String BRANDS =
+      "We are developing this section with dynamic functionalities where स्वदेशी Brands will be highlighted as part of Vocal For Local campaign and towards a huge success of Aatmanirbhar Bharat mission.\n\nस्वदेशी Brands owners can contact us on wedeshi.in@gmail.com so we can consider them to be highlighted and send them further details.";
+
+  static const String SUBMIT_BRANDS =
       "Please send your Brand/Product details to us.\nOur verification team will validate data and upload in our application.\n\nEmail: wedeshi.in@gmail.com\n\nNote: Your email doesn't guarantee any listing, it may take longer time than expected due to many requests.";
   static const CATEGORIES = "Categories";
 
