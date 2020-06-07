@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:share/share.dart';
 import 'package:wedeshi/common/custom_appbar.dart';
+import 'package:wedeshi/home_page.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 import 'package:wedeshi/utils/constants.dart';
+import 'package:connectivity/connectivity.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final int productId;
@@ -27,10 +30,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   List<Product> relatedLocalProducts;
   Product product;
   bool isLoading = false;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  ReactionDisposer _disposer;
 
   @override
   void initState() {
     super.initState();
+    initReaction();
     if (widget.localProducts != null) {
       relatedLocalProducts = widget.localProducts.toList();
       relatedLocalProducts
@@ -38,6 +45,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     } else {
       fetchProducts();
     }
+  }
+
+  void initReaction() {
+    _disposer = reaction(
+        (_) => store.connectivityStream.value,
+        (result) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(result == ConnectivityResult.none
+                ? 'You\'re offline'
+                : 'You\'re online'))),
+        delay: 4000);
   }
 
   void fetchProducts() async {
@@ -58,6 +75,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: _scaffoldKey,
       appBar: Widgets.getCustomAppBar(context, onShare: () {
         if (product != null)
           Share.share(Constants.getProductShareMessage(product));
@@ -214,5 +232,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             }
           }),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 }

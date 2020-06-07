@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+import 'package:wedeshi/home_page.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/screens/product_detail_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 import 'package:wedeshi/utils/debouncer.dart';
+import 'package:connectivity/connectivity.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -14,6 +17,10 @@ class _SearchPageState extends State<SearchPage> {
   bool isloading = false;
   TextEditingController searchController = TextEditingController();
   List<Product> products = [];
+
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  ReactionDisposer _disposer;
 
   final _debouncer = Debouncer(milliseconds: 500);
 
@@ -28,8 +35,25 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   @override
+  void initState() {
+    initReaction();
+    super.initState();
+  }
+
+  void initReaction() {
+    _disposer = reaction(
+        (_) => store.connectivityStream.value,
+        (result) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(result == ConnectivityResult.none
+                ? 'You\'re offline'
+                : 'You\'re online'))),
+        delay: 4000);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: false,
         title: Image.network(
@@ -128,5 +152,11 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 }

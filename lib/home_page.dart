@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:share/share.dart';
 import 'package:wedeshi/main.dart';
 import 'package:wedeshi/screens/brands_page.dart';
@@ -9,9 +10,13 @@ import 'package:wedeshi/screens/more_page.dart';
 import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/screens/submit_brand_page.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:wedeshi/store/connectivity_store.dart';
 import 'package:wedeshi/utils/constants.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity/connectivity.dart';
+
+ConnectivityStore store = ConnectivityStore();
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,6 +26,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex;
   GlobalKey _one = GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  ReactionDisposer _disposer;
 
   RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: "rma_wedeshi_",
@@ -34,6 +42,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _selectedIndex = 0;
     showShowcaseView();
+    initReaction();
     _rateMyApp.init().then((_) {
       if (_rateMyApp.shouldOpenDialog) {
         showDialog(
@@ -43,6 +52,16 @@ class _HomePageState extends State<HomePage> {
         );
       }
     });
+  }
+
+  void initReaction() {
+    _disposer = reaction(
+        (_) => store.connectivityStream.value,
+        (result) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(result == ConnectivityResult.none
+                ? 'You\'re offline'
+                : 'You\'re online'))),
+        delay: 4000);
   }
 
   Future<void> showShowcaseView() async {
@@ -74,6 +93,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: false,
         title: Image.network(
@@ -124,5 +144,11 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 }

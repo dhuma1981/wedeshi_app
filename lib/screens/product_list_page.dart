@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:share/share.dart';
+import 'package:wedeshi/home_page.dart';
 import 'package:wedeshi/models/product_model.dart';
 import 'package:wedeshi/screens/product_detail_page.dart';
 import 'package:wedeshi/screens/search_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
 import 'package:wedeshi/utils/constants.dart';
+import 'package:connectivity/connectivity.dart';
 
 class ProductListPage extends StatefulWidget {
   final int selectedSubCategoryId;
@@ -20,14 +23,28 @@ class ProductListPage extends StatefulWidget {
 class _ProductListPageState extends State<ProductListPage> {
   bool isLoading = false;
   bool fromSubSub = false;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  ReactionDisposer _disposer;
 
   List<Product> desiProductList = [], weDeshiProductList = [];
 
   @override
   void initState() {
     super.initState();
+    initReaction();
     if (widget.selectedSubSubCategoryId != null) fromSubSub = true;
     fetchProducts();
+  }
+
+  void initReaction() {
+    _disposer = reaction(
+        (_) => store.connectivityStream.value,
+        (result) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(result == ConnectivityResult.none
+                ? 'You\'re offline'
+                : 'You\'re online'))),
+        delay: 4000);
   }
 
   void fetchProducts() async {
@@ -61,6 +78,7 @@ class _ProductListPageState extends State<ProductListPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           centerTitle: false,
           title: Image.network(
@@ -207,5 +225,11 @@ class _ProductListPageState extends State<ProductListPage> {
         : Center(
             child: Text("No  ${Constants.WEDESHI} products found!"),
           );
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 }

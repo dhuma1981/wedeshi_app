@@ -1,7 +1,10 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:wedeshi/common/custom_appbar.dart';
+import 'package:wedeshi/home_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
+import 'package:connectivity/connectivity.dart';
 
 class FeedbackPage extends StatefulWidget {
   @override
@@ -16,6 +19,25 @@ class _FeedbackPageState extends State<FeedbackPage> {
   bool _numberError = false;
   bool _feedbackError = false;
   bool isLoaing = false;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  ReactionDisposer _disposer;
+
+  @override
+  void initState() {
+    initReaction();
+    super.initState();
+  }
+
+  void initReaction() {
+    _disposer = reaction(
+        (_) => store.connectivityStream.value,
+        (result) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(result == ConnectivityResult.none
+                ? 'You\'re offline'
+                : 'You\'re online'))),
+        delay: 4000);
+  }
 
   Future<void> submitFeedback() async {
     if (_name.text.isEmpty) {
@@ -59,6 +81,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: Widgets.getCustomAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -131,5 +154,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 }

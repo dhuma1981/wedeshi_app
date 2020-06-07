@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:wedeshi/common/custom_appbar.dart';
+import 'package:wedeshi/home_page.dart';
 import 'package:wedeshi/models/subsubcategory_model.dart';
 import 'package:wedeshi/screens/product_list_page.dart';
 import 'package:wedeshi/utils/api_provider.dart';
+import 'package:connectivity/connectivity.dart';
 
 class SubSubCategoryPage extends StatefulWidget {
   final int selectedSubCategoryId;
@@ -17,11 +20,25 @@ class SubSubCategoryPage extends StatefulWidget {
 class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
   bool isLoading = false;
   List<SubSubCategory> data;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  ReactionDisposer _disposer;
 
   @override
   void initState() {
     super.initState();
+    initReaction();
     fetchSubSubCategory();
+  }
+
+  void initReaction() {
+    _disposer = reaction(
+        (_) => store.connectivityStream.value,
+        (result) => _scaffoldKey.currentState.showSnackBar(SnackBar(
+            content: Text(result == ConnectivityResult.none
+                ? 'You\'re offline'
+                : 'You\'re online'))),
+        delay: 4000);
   }
 
   fetchSubSubCategory() async {
@@ -43,6 +60,7 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: Widgets.getCustomAppBar(context),
       body: isLoading
           ? Center(
@@ -96,5 +114,11 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
                     );
                   })),
     );
+  }
+
+  @override
+  void dispose() {
+    _disposer();
+    super.dispose();
   }
 }
