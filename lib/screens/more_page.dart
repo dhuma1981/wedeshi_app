@@ -5,6 +5,7 @@ import 'package:launch_review/launch_review.dart';
 import 'package:wedeshi/screens/about_us_page.dart';
 import 'package:wedeshi/screens/defination_local_page.dart';
 import 'package:wedeshi/screens/disclaimer_page.dart';
+import 'package:wedeshi/screens/feedback_page.dart';
 import 'package:wedeshi/utils/constants.dart';
 import 'package:wedeshi/main.dart';
 
@@ -68,6 +69,10 @@ class _MorePageState extends State<MorePage> {
         ),
         Divider(),
         ListTile(
+          onTap: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => FeedbackPage()));
+          },
           leading: Icon(Icons.feedback),
           title: Text(Constants.FEEDBACK),
         ),

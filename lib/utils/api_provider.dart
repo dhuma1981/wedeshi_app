@@ -150,6 +150,27 @@ class ApiProvider {
       throw Exception('Failed to fetch conversations');
     }
   }
+
+  static Future<String> submitFeedback(
+      {String name, String number, String feedback}) async {
+    var map = new Map<String, dynamic>();
+    map["secret"] = Keys.TOKEN;
+    map["customer_name"] = name;
+    map["mobile_no"] = number;
+    map["feedback"] = feedback;
+    map["app_version"] = "1.0.0";
+    map["zipcode"] = "360005";
+
+    final response = await getClient()
+        .post("${Constants.BASE_REST_URL}/feedback", body: map);
+
+    if (response.statusCode == 200) {
+      var temp = json.decode(response.body);
+      return temp["message"];
+    } else {
+      throw Exception('Failed to fetch conversations');
+    }
+  }
 }
 
 class HeaderInterceptor implements InterceptorContract {

@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     showShowcaseView();
     _rateMyApp.init().then((_) {
       if (_rateMyApp.shouldOpenDialog) {
-        _rateMyApp.showRateDialog(context);
+        _rateMyApp.showStarRateDialog(context);
       }
     });
   }
