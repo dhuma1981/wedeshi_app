@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   ReactionDisposer _disposer;
+  bool isInternetConnected = false;
 
   RateMyApp _rateMyApp = RateMyApp(
       preferencesPrefix: "rma_wedeshi_",
@@ -41,17 +42,32 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _selectedIndex = 0;
-    showShowcaseView();
-    initReaction();
-    _rateMyApp.init().then((_) {
-      if (_rateMyApp.shouldOpenDialog) {
-        showDialog(
-          context: context,
-          builder: (context) => Constants.showRatingDialog(
-              context: context, rateMyApp: _rateMyApp),
-        );
-      }
-    });
+    checkInternet();
+  }
+
+  void checkInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        isInternetConnected = false;
+      });
+    } else {
+      initReaction();
+      showShowcaseView();
+
+      _rateMyApp.init().then((_) {
+        if (_rateMyApp.shouldOpenDialog) {
+          showDialog(
+            context: context,
+            builder: (context) => Constants.showRatingDialog(
+                context: context, rateMyApp: _rateMyApp),
+          );
+        }
+      });
+      setState(() {
+        isInternetConnected = true;
+      });
+    }
   }
 
   void initReaction() {
@@ -96,10 +112,15 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: false,
-        title: Image.network(
-          "https://wedeshi.in/uploads/app/logo.png",
-          width: 80,
-        ),
+        title: isInternetConnected
+            ? Image.network(
+                "https://wedeshi.in/uploads/app/logo.png",
+                width: 80,
+              )
+            : Image.asset(
+                "assets/wedeshi_small.png",
+                width: 80,
+              ),
         actions: [
           Showcase(
             key: _one,
@@ -115,15 +136,25 @@ class _HomePageState extends State<HomePage> {
           ),
           IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => SearchPage()));
-              }),
+              onPressed: isInternetConnected
+                  ? () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => SearchPage()));
+                    }
+                  : null),
 
           //IconButton(icon: Icon(Icons.notifications_none), onPressed: () {})
         ],
       ),
-      body: _getPage(_selectedIndex),
+      body: !isInternetConnected
+          ? Center(
+              child: Text(
+                "You are offline.\n\nPlease connect to internet and restart the app.",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+              ),
+            )
+          : _getPage(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,

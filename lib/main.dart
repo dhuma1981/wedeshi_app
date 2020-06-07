@@ -7,9 +7,13 @@ RemoteConfig remoteConfig;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  remoteConfig = await RemoteConfig.instance;
-  await remoteConfig.fetch(expiration: Duration(seconds: 0));
-  await remoteConfig.activateFetched();
+  try {
+    remoteConfig = await RemoteConfig.instance;
+    await remoteConfig.fetch(expiration: Duration(seconds: 0));
+    await remoteConfig.activateFetched();
+  } catch (e) {
+    print(e.toString());
+  }
   runApp(
     MyApp(),
   );

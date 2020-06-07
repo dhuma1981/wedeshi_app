@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/wedeshi_local_vocal.png
     - assets/ic_launcher.png
+    - assets/wedeshi_small.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
