@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>507315956939-9p8p262g6dm5mcb5u0077r8n35lppfm2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.507315956939-9p8p262g6dm5mcb5u0077r8n35lppfm2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBL3NbZQmlXRvRkF0ZkfTk37kH01RrN6Xo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>507315956939</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>in.bi.wedeshi</string>
+	<key>PROJECT_ID</key>
+	<string>wedeshi-f956f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wedeshi-f956f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:507315956939:ios:b2d7b66b21a61bd0457f4e</string>
+	<key>DATABASE_URL</key>
+	<string>https://wedeshi-f956f.firebaseio.com</string>
+</dict>
+</plist>

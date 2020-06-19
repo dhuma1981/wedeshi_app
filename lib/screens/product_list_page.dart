@@ -103,6 +103,8 @@ class _ProductListPageState extends State<ProductListPage> {
           ],
           bottom: TabBar(
               labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              unselectedLabelStyle: TextStyle(color: Colors.grey),
+              indicatorWeight: 8,
               tabs: [
                 Tab(
                   text: Constants.SWADESHI,
@@ -125,7 +127,7 @@ class _ProductListPageState extends State<ProductListPage> {
             child: GridView.builder(
                 itemCount: desiProductList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                    crossAxisCount: 3),
                 itemBuilder: (_, index) {
                   Product product = desiProductList[index];
                   return InkWell(
@@ -144,8 +146,8 @@ class _ProductListPageState extends State<ProductListPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 120,
-                              height: 120,
+                              width: 60,
+                              height: 60,
                               child: CachedNetworkImage(
                                   imageUrl: product.imagePath,
                                   errorWidget: (context, url, error) => Icon(
@@ -179,7 +181,7 @@ class _ProductListPageState extends State<ProductListPage> {
             child: GridView.builder(
                 itemCount: weDeshiProductList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
+                    crossAxisCount: 3),
                 itemBuilder: (_, index) {
                   Product product = weDeshiProductList[index];
                   return InkWell(
@@ -198,8 +200,8 @@ class _ProductListPageState extends State<ProductListPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 120,
-                              height: 120,
+                              width: 60,
+                              height: 60,
                               child: CachedNetworkImage(
                                 imageUrl: product.imagePath,
                                 errorWidget: (context, url, error) => Icon(
