@@ -16,6 +16,9 @@ class Constants {
   static const SWADESHI = "स्वदेशी";
   static const WEDESHI = "विदेशी";
 
+  static const SWADESHI_English = "Swadeshi";
+  static const WEDESHI_English = "Videshi";
+
   static const DEFINATION_LOCAL = "Our defination of स्वदेशी";
   static const ABOUT_US = "About Us";
   static const DISCLAIMER = "Disclaimer";
@@ -23,8 +26,12 @@ class Constants {
   static const RATE_US = "Rate Us";
 
   static const RELATED_LOCAL_PRODUCTS = "Related $SWADESHI products";
+  static const RELATED_LOCAL_PRODUCTS_English =
+      "Related $SWADESHI_English products";
 
-  static const NO_PRODUCT_FOUND = "No related स्वदेशी products found!";
+  static const NO_PRODUCT_FOUND = "No related $SWADESHI products found!";
+  static const NO_PRODUCT_FOUND_English =
+      "No related $SWADESHI_English products found!";
 
   static const PRODUCT_SHARE =
       " - क्या आप को पता था?\n\nचलिए स्वदेशी चीज़ो को अग्रिमता दे और देश को आगे बढ़ाए.\nइस एप के जरिए आप आसानीसे जान सकते है की कौन सा \"स्वदेशी\" प्रोडक्ट है और कौन सा \"विदेशी\" प्रोडक्ट। इतना ही नहीं, ये एप आपको कोई भी \"विदेशी\" प्रोडक्ट की जगह कौन सी \"स्वदेशी\" प्रोडक्ट खरीदनी चाहिए वो जानकारी भी देगा। कृपया इस ऐप को डाउनलोड करें।\n\nये एप्लीकेशन सभी देश वासियो तक पाहोचाए !\n\nhttps://bit.ly/swadeshiProducts\n\nजय हिन्द";

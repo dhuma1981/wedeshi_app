@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -107,9 +109,14 @@ class _ProductListPageState extends State<ProductListPage> {
               indicatorWeight: 8,
               tabs: [
                 Tab(
-                  text: Constants.SWADESHI,
+                  text: Platform.isIOS
+                      ? Constants.SWADESHI_English
+                      : Constants.SWADESHI,
                 ),
-                Tab(text: Constants.WEDESHI),
+                Tab(
+                    text: Platform.isIOS
+                        ? Constants.WEDESHI_English
+                        : Constants.WEDESHI),
               ]),
         ),
         body: isLoading
@@ -170,7 +177,8 @@ class _ProductListPageState extends State<ProductListPage> {
                   );
                 }))
         : Center(
-            child: Text("No ${Constants.SWADESHI} products found!"),
+            child: Text(
+                "No ${Platform.isIOS ? Constants.SWADESHI_English : Constants.SWADESHI} products found!"),
           );
   }
 

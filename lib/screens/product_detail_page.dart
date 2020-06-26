@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -121,8 +123,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               padding: const EdgeInsets.all(5.0),
                               child: Text(
                                 product.brandId == 5
-                                    ? Constants.SWADESHI
-                                    : Constants.WEDESHI,
+                                    ? Platform.isIOS
+                                        ? Constants.SWADESHI_English
+                                        : Constants.SWADESHI
+                                    : Platform.isIOS
+                                        ? Constants.WEDESHI_English
+                                        : Constants.WEDESHI,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 14,
@@ -151,7 +157,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text(
-                        Constants.RELATED_LOCAL_PRODUCTS,
+                        Platform.isIOS
+                            ? Constants.RELATED_LOCAL_PRODUCTS_English
+                            : Constants.RELATED_LOCAL_PRODUCTS,
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
@@ -221,7 +229,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                         ),
                                       )))
                           : Center(
-                              child: Text(Constants.NO_PRODUCT_FOUND),
+                              child: Text(Platform.isIOS
+                                  ? Constants.NO_PRODUCT_FOUND_English
+                                  : Constants.NO_PRODUCT_FOUND),
                             )
                 ],
               );

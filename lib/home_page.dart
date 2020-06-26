@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -126,7 +127,7 @@ class _HomePageState extends State<HomePage> {
             key: _one,
             title: "Share App",
             description:
-                "\nGive priority to ${Constants.SWADESHI} products. Please share the app to maximum number of people to aware for ${Constants.SWADESHI} products.\n\nShare to minimum 10 people.",
+                "\nGive priority to ${Platform.isIOS ? Constants.SWADESHI_English : Constants.SWADESHI} products. Please share the app to maximum number of people to aware for ${Platform.isIOS ? Constants.SWADESHI_English : Constants.SWADESHI} products.\n\nShare to minimum 10 people.",
             child: IconButton(
                 icon: Icon(Icons.share),
                 onPressed: () {
